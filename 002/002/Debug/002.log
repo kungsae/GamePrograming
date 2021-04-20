@@ -1,0 +1,4 @@
+﻿  main.cpp
+F:\GamePrograming\002\002\main.cpp(24,12): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+F:\GamePrograming\002\002\main.cpp(20): warning C4715: 'GetGrade': 모든 제어 경로에서 값을 반환하지는 않습니다.
+  002.vcxproj -> F:\GamePrograming\002\Debug\002.exe

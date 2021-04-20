@@ -1,0 +1,3 @@
+﻿  main.cpp
+F:\GamePrograming\004\004\main.cpp(109,7): warning C4101: 'bSame' :참조되지 않은 지역 변수입니다.
+  004.vcxproj -> F:\GamePrograming\004\Debug\004.exe
