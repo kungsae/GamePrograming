@@ -6,57 +6,50 @@
 using namespace std;
 
 Console con;
-vector<int> v;
-int indexX = 0;
+vector <int> v(10);
+vector <int> y(10);
+float speed = 100;
 
-void test(int a,int b)
+int Note(int x,int y)
 {
-	v[a] ++;
-	con.gotoXY(v[a], b);
+	x+=2;
+	con.gotoXY(x,y);
 	cout << "@";
-	if (v[a] >= 20)
-	{
-		v[a] = 0;
-	}
-	//con.gotoXY(v[a],b);
-	//cout << "@";
+	return x;
 }
-void Creat()
+
+void StratNote()
 {
-	srand((unsigned)time(NULL));
-
-
+	for (int i = 0; i < 7; i++)
+	{
+		v[i] = Note(v[i],y[i]);
+		if (v[i] >= 20)
+		{
+			v[i] = 0;
+			y[i] = rand() % 2;
+			if(speed>10)
+			speed-=0.5f;
+		}
+	}
 }
+
 int main()
 {
-	
-	v.assign(10,0);
-	for (int i = 0; i < 8; i++)
+	srand((unsigned)time(NULL));
+	for (int i = 0; i < 7; i++)
 	{
-		v[i] = i;
+
+		v[i] = -i;
+		y[i] = rand() % 2;
 	}
-	
+
 	while (true)
 	{
-		for (int i = 0; i < 7; i++)
-		{
-			test(0, 0);
-			test(1, 1);
-			test(2, 2);
-			test(3, 3);
-			test(4, 4);
-			test(5, 5);
-			test(6, 6);
-			test(7, 7);
-		}
 
+		StratNote();
+		Sleep(20);
 
-
-		//Creat();
-		Sleep(50);
 		system("cls");
-
-		
 	}
 	return(0);
 }
