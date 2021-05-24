@@ -17,10 +17,6 @@ void Console:: clrscr()
 	system("cls");
 }
 
-void Console:: setTextColor(int color)
-{
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
-}
 void Console::beep(int tone, int delay)
 {
 	Beep(tone, delay);
@@ -31,4 +27,9 @@ int Console::input()
 	{
 		return _getch() - '0';
 	}
+}
+void Console::textColor(int foreground, int background)
+{
+	int color = foreground + background * 16;
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 }
