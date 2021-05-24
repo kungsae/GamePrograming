@@ -23,9 +23,9 @@ void Console::beep(int tone, int delay)
 }
 int Console::input()
 {
-	if (_kbhit() != 0)
+	if (_kbhit() != 0&& _getch() == 224)
 	{
-		return _getch() - '0';
+		return _getch();
 	}
 }
 void Console::textColor(int foreground, int background)
