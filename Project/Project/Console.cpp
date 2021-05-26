@@ -1,9 +1,6 @@
 #include "Console.h"
-#include"console.h"
-#include<Windows.h>
-#include<conio.h>
 
-void Console::gotoXY(int x, int y)
+void gotoXY(int x, int y)
 {
 	HANDLE hOut;
 	COORD Cur;
@@ -12,23 +9,49 @@ void Console::gotoXY(int x, int y)
 	Cur.Y = y;
 	SetConsoleCursorPosition(hOut, Cur);
 }
-void Console:: clrscr()
+void clrscr()
 {
 	system("cls");
 }
 
-void Console::beep(int tone, int delay)
+void beep(int note, int delay)
 {
-	Beep(tone, delay);
+	switch (note)
+	{
+	case 1:
+		Beep(262, delay);
+		break;
+	case 2:
+		Beep(294, delay);
+		break;
+	case 3:
+		Beep(330, delay);
+		break;
+	case 4:
+		Beep(349, delay);
+		break;
+	case 5:
+		Beep(392, delay);
+		break;
+	case 6:
+		Beep(440, delay);
+		break;
+	case 7:
+		Beep(494, delay);
+		break;
+	case 8:
+		Beep(523, delay);
+		break;
+	}
 }
-int Console::input()
+int input()
 {
 	if (_kbhit() != 0&& _getch() == 224)
 	{
 		return _getch();
 	}
 }
-void Console::textColor(int foreground, int background)
+void textColor(int foreground, int background)
 {
 	int color = foreground + background * 16;
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);

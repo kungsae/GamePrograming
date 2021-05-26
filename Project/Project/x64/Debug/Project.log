@@ -1,3 +1,4 @@
 ﻿  main.cpp
-F:\GamePrograming\GamePrograming_SorceTree\Project\Project\main.cpp(146,6): warning C4101: 'input' :참조되지 않은 지역 변수입니다.
+F:\GamePrograming\GamePrograming_SorceTree\Project\Project\Console.h(28,3): warning C4091: 'extern ': 변수를 선언하지 않으면 'Color' 왼쪽은 무시됩니다.
+F:\GamePrograming\GamePrograming_SorceTree\Project\Project\main.cpp(104): warning C4715: 'InputNote': 모든 제어 경로에서 값을 반환하지는 않습니다.
   Project.vcxproj -> F:\GamePrograming\GamePrograming_SorceTree\Project\x64\Debug\Project.exe
