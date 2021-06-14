@@ -2,6 +2,9 @@
 #include"Console.h"
 #include<vector>
 #include"Note.h"
+#include<time.h>
+#include <mmsystem.h>
+#pragma comment(lib,"winmm.lib")
 
 
 #define STARTX 50
@@ -18,11 +21,35 @@ enum
 	RIGHT,
 	DOWN
 };
+int BGM[999] =
+//{
+//	DB8,B16,B8,B8,B8,B8,STOP,B4,B8,B8,B4,B8,B8,B4
+//};
+{ B16,B16,B8,DB8,B8,B8,B8,B16,B16,B16,
+	B16,B16,B8,DB8,B8,B8,B8,B16,B16,B16,
+B16,B16,B8,DB8,B8,B8,B8,B16,B16,B16,
+B16,B16,B8,DB8,B8,B8,B8,B16,B16,B16,
+B16,B16,B8,DB8,B8,B8,B8,B16,B16,B16,
+B16,B16,B8,DB8,B8,B8,B8,B16,B16,B16,
+B16,B16,B8,DB8,B8,B8,B8,B16,B16,B16,
+B16,B16,B8,DB8,B8,B8,B8,B16,B16,B16,
+B16,B16,B8,DB8,B8,B8,B8,B16,B16,B16,
+B16,B16,B8,DB8,B8,B8,B8,B16,B16,B16,
+B16,B16,B8,DB8,B8,B8,B8,B16,B16,B16,
+B16,B16,B8,DB8,B8,B8,B8,B16,B16,B16,
+B16,B16,B8,DB8,B8,B8,B8,B16,B16,B16,
+B16,B16,B8,DB8,B8,B8,B8,B16,B16,B16,
+B16,B16,B8,DB8,B8,B8,B8,B16,B16,B16,
+B16,B16,B8,DB8,B8,B8,B8,B16,B16,B16, };
+
+int BGMIndex = 0;
 bool bSound = false;
+int noteLevel = 50;
 int _input[4];
 int score = 0;
 int accuracy = 4;
 int hp = 10;
+int delay = 1000;
 void SetConsoleView()
 {
 	system("mode con:cols=100 lines=20");
@@ -42,6 +69,7 @@ void SetSceen()
 	cout << "  ¢·  ¢¹" << endl;
 	cout << endl;
 	cout << "score : " << score << endl;
+	cout << delay<<endl;
 	switch (accuracy)
 	{
 	case 0:
@@ -51,7 +79,7 @@ void SetSceen()
 		cout << "Good"<<endl;
 		break;
 	case 2:
-		cout << "Bad"<<endl;
+		cout << "Miss"<<endl;
 		break;
 	default:
 		cout << endl;
@@ -127,6 +155,7 @@ bool checkInput(int i, int xPos,int xPos2, int note1, int note2)
 
 int main()
 {
+	
 	SetConsoleView();
 	SetSceen();
 	
@@ -134,19 +163,47 @@ int main()
 	srand((unsigned)time(NULL));
 	note.clear();
 
+	float checkBit = 0;
+	int a = 0;
+	int b = 0;
+
 	while (true)
 	{
-		bSound = false;
+		b++;
+		if (b == 50)
+		{
+			PlaySound("Megalovania.wav", 0, SND_FILENAME | SND_ASYNC);
+		}
+		a+=10;
 		SetSceen();
+		if (checkBit <= a)
+		{
+			a = 0;
+			checkBit = sleepDelay(BGM[BGMIndex]);
+
+			if (BGM[BGMIndex] != STOP)
+			{
+				//score++;
+				Note _note;
+				_note.setNote(STARTX);
+
+				note.push_back(_note);
+			}
+			if (BGMIndex % 16 == 0)
+			{
+				
+			}
+			BGMIndex++;
+		}
 		for(int i = 0; i <4; i++)
 		_input[i] = InputNote(input());;
-		if (rand() % 100 < 10)
-		{
-			Note _note;
-			_note.setNote(STARTX);
+		//if (rand() % 100 < noteLevel)
+		//{
+		//	Note _note;
+		//	_note.setNote(STARTX);
 
-			note.push_back(_note);
-		}
+		//	note.push_back(_note);
+		//}
 		for (int i = 0; i < note.size(); i++)
 		{
 			note[i].moveNote();
@@ -159,7 +216,6 @@ int main()
 			if (checkInput(i,3,RIGHT,DOWN))
 			{
 				note.erase(note.begin() + i);
-				beep(note[i].note * (rand() % 2 + 1), 50);
 				i--;
 				score+=2;
 				accuracy = 0;
@@ -169,7 +225,6 @@ int main()
 			else if (checkInput(i,1,UP,LEFT))
 			{
 				note.erase(note.begin() + i);
-				beep(note[i].note * (rand() % 2 + 1), 50);
 				i--;
 				score += 2;
 				accuracy = 0;
@@ -180,7 +235,6 @@ int main()
 			else if (checkInput(i,0,2, UP, LEFT))
 			{
 				note.erase(note.begin() + i);
-				beep(note[i].note * (rand() % 2 + 1), 50);
 				i--;
 				score++;
 				accuracy = 1;
@@ -190,7 +244,6 @@ int main()
 			else if (checkInput(i,2,4, RIGHT, DOWN))
 			{
 				note.erase(note.begin() + i);
-				beep(note[i].note * (rand() % 2 + 1), 50);
 				i--;
 				score++;
 				accuracy = 1;
@@ -200,29 +253,25 @@ int main()
 			//¹èµå
 			else if (note[i].checkEnd())
 			{
+				
 				 note.erase(note.begin() + i);
-				 Beep(1000, 50);
 				 i--;
 				 hp--;
 				 accuracy = 2;
 				 bSound = true;
+
+				 //if (hp <= 0)
+				 //{
+					// gameOver(score);
+					// return(0);
+				 //}
 			}
 		}
-		if(!bSound)
-		Sleep(50);
+	/*	if(!bSound)*/
+		//Sleep(1);
 		system("cls");
 	}
 	return(0);
 }
 
-//int main()
-//{
-//	while (true)
-//	{
-//		cout << input();
-//		Sleep(100);
-//		system("cls");
-//		
-//	}
-//	
-//}
+

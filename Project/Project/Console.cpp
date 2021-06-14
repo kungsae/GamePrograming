@@ -44,6 +44,44 @@ void beep(int note, int delay)
 		break;
 	}
 }
+double sleepDelay(int bit)
+{
+	switch (bit)
+	{
+	case B1:
+		return 1000;
+		break;
+	case B2:
+		return 500;
+		break;
+	case DB2:
+		return 750;
+		break;
+	case B4:
+		return 250;
+		break;
+	case DB4:
+		return 375;
+		break;
+	case B8:
+		return 125;
+		break;
+	case DB8:
+		return 187;
+		break;
+	case B16:
+		return 62;
+		break;
+	case B32:
+		return 31;
+		break;
+	case STOP:
+		return 62;
+		break;
+	default:
+		break;
+	}
+}
 int input()
 {
 	if (_kbhit() != 0&& _getch() == 224)
@@ -56,3 +94,12 @@ void textColor(int foreground, int background)
 	int color = foreground + background * 16;
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 }
+void gameOver(int score)
+{
+	system("cls");
+	cout << "게임 오바";
+	cout << "최고 점수 : " << score << endl;
+}
+
+
+//What the Fuck??
